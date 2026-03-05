@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @Embeddable
-public class SetRoleId implements Serializable {
-	private Integer empId;
+public class SetCompKey implements Serializable {
+	private String empId;
 	private Integer roleId;
 }

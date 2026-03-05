@@ -26,7 +26,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 public class Roles {
 
 	@EmbeddedId
-	private SetRoleId id;
+	private SetCompKey comp;
 
 	@ManyToOne
 	@MapsId("empId")
@@ -43,7 +43,7 @@ public class Roles {
 	private LocalDateTime createdAt;
 
 	@Column(name = "role_active", nullable = false)
-	private boolean isActive;
+	private Boolean isActive;
 
 	@UpdateTimestamp
 	@Column(name = "updated_at")

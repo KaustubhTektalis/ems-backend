@@ -64,7 +64,7 @@ public class Employee {
 
 	@Builder.Default
 	@Column(name = "employee_active", nullable = false)
-	private boolean isEmployeeActive = true;
+	private Boolean isEmployeeActive = true;
 
 	@Column(name = "created_at", updatable = false)
 	private LocalDateTime createdAt;
