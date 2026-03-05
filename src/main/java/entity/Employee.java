@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
@@ -18,16 +16,15 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@Table(name = "employee")
+@Table(name = "employees")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Employee {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID) // write a class for this.
-	@Column(name = "emp_id", nullable = false, updatable = false)
-	private String empId;
+	@Column(name = "emp_id", nullable = false, updatable = false, insertable = false)
+    private String empId;
 
 	@Column(nullable = false)
 	private String name;
