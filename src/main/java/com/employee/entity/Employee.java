@@ -37,7 +37,7 @@ public class Employee {
     @GeneratedValue(generator = "emp-id-generator")
     @GenericGenerator(
         name = "emp-id-generator",
-        strategy = "com.ems.utils.EmployeeIdGenerator"
+        strategy = "com.employee.utils.EmployeeIdGenerator"
     )
     @EqualsAndHashCode.Include
     @Column(name = "emp_id")
