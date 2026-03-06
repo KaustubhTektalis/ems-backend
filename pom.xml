@@ -95,11 +95,6 @@
 			<version>7.2.4.Final</version>
 			<scope>compile</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.springReact</groupId>
-			<artifactId>SpringReact</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

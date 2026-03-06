@@ -101,10 +101,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public void deleteEmployee(String empId) {
-
     	Employee employee = employeeRepository.findById(empId)
 				.orElseThrow(() -> new EntityNotFoundException("Employee with id " + empId + " not found"));
-
     	employee.setIsEmployeeActive(false);
 		employee.setDateOfExit(LocalDate.now());
 		employeeRepository.save(employee);
