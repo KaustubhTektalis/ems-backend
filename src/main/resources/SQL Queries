@@ -1,0 +1,32 @@
+1. Run the spring project first
+2. run the following queries in sequence in psql tool of the mentioned database :
+
+---------------
+
+CREATE SEQUENCE employee_seq
+START 1
+INCREMENT 1
+MINVALUE 1;
+
+---------------------
+
+CREATE OR REPLACE FUNCTION generate_emp_id()
+RETURNS trigger AS $$
+BEGIN
+    NEW.emp_id := 'TT' || LPAD(nextval('employee_seq')::text, 4, '0');
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+---------------------
+
+CREATE TRIGGER emp_id_trigger
+BEFORE INSERT ON employees
+FOR EACH ROW
+EXECUTE FUNCTION generate_emp_id();
+
+----------------------------
+
+
+
