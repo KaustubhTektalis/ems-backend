@@ -23,7 +23,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Password {
+public class User {
 
 	@Id
 	@Column(name = "emp_id", nullable = false, updatable = false)
