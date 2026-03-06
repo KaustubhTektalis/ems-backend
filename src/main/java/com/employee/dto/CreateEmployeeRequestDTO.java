@@ -1,9 +1,10 @@
-package com.ems.dto;
+package com.employee.dto;
 
 import java.time.LocalDate;
 import java.util.Set;
 
-import com.ems.enums.RolesEnum;
+import com.employee.enums.RolesEnum;
+
 import lombok.Data;
 
 @Data

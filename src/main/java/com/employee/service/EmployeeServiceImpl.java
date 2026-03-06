@@ -1,4 +1,4 @@
-package com.ems.service;
+package com.employee.service;
 
 import java.util.List;
 import java.util.Set;
@@ -7,16 +7,16 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ems.dto.CreateEmployeeRequestDTO;
-import com.ems.dto.EmployeeResponseDTO;
-import com.ems.entity.Employee;
-import com.ems.entity.Password;
-import com.ems.entity.Roles;
-import com.ems.entity.SetCompKey;
-import com.ems.entity.UserRoles;
-import com.ems.repository.EmployeeRepository;
-import com.ems.repository.PasswordRepository;
-import com.ems.repository.RolesRepository;
+import com.employee.dto.CreateEmployeeRequestDTO;
+import com.employee.dto.EmployeeResponseDTO;
+import com.employee.entity.Employee;
+import com.employee.entity.Password;
+import com.employee.entity.Roles;
+import com.employee.entity.SetCompKey;
+import com.employee.entity.UserRoles;
+import com.employee.repository.EmployeeRepository;
+import com.employee.repository.PasswordRepository;
+import com.employee.repository.RolesRepository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

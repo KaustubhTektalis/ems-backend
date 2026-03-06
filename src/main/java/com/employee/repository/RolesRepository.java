@@ -1,10 +1,10 @@
-package com.ems.repository;
+package com.employee.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.ems.entity.Password;
-import com.ems.entity.Roles;
-import com.ems.enums.RolesEnum;
+import com.employee.entity.Password;
+import com.employee.entity.Roles;
+import com.employee.enums.RolesEnum;
 
 public interface RolesRepository extends JpaRepository<Roles, Integer> {
 

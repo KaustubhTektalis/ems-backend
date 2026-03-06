@@ -1,6 +1,7 @@
-package com.ems.entity;
+package com.employee.entity;
 
-import com.ems.enums.RolesEnum;
+import com.employee.enums.RolesEnum;
+
 import jakarta.persistence.*;
 import lombok.Data;
 

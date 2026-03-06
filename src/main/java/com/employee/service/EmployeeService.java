@@ -1,9 +1,9 @@
-package com.ems.service;
+package com.employee.service;
 
 import java.util.List;
 
-import com.ems.dto.CreateEmployeeRequestDTO;
-import com.ems.dto.EmployeeResponseDTO;
+import com.employee.dto.CreateEmployeeRequestDTO;
+import com.employee.dto.EmployeeResponseDTO;
 
 public interface EmployeeService {
 

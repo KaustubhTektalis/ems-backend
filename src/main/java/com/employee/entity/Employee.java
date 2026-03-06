@@ -1,4 +1,4 @@
-package com.ems.entity;
+package com.employee.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

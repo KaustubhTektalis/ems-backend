@@ -1,4 +1,4 @@
-package com.ems.dto;
+package com.employee.dto;
 
 import java.time.LocalDate;
 import lombok.Builder;

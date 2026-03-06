@@ -1,4 +1,4 @@
-package com.ems.enums;
+package com.employee.enums;
 
 public enum Departments {
 	DEVELOPMENT,

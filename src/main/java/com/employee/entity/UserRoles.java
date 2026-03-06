@@ -1,4 +1,4 @@
-package com.ems.entity;
+package com.employee.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;

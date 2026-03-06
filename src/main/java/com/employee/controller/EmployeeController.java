@@ -1,12 +1,12 @@
-package com.ems.controller;
+package com.employee.controller;
 
 import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.ems.dto.CreateEmployeeRequestDTO;
-import com.ems.dto.EmployeeResponseDTO;
-import com.ems.service.EmployeeService;
+import com.employee.dto.CreateEmployeeRequestDTO;
+import com.employee.dto.EmployeeResponseDTO;
+import com.employee.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
 
