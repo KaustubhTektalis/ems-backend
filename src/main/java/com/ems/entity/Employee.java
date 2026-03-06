@@ -1,32 +1,49 @@
-package entity;
+package com.ems.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Set;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
-@Data
 @Table(name = "employees")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Employee {
 
-	@Id
-	@Column(name = "emp_id", nullable = false, updatable = false, insertable = false)
+    @Id
+    @GeneratedValue(generator = "emp-id-generator")
+    @GenericGenerator(
+        name = "emp-id-generator",
+        strategy = "com.ems.utils.EmployeeIdGenerator"
+    )
+    @EqualsAndHashCode.Include
+    @Column(name = "emp_id")
     private String empId;
 
-	@Column(nullable = false)
+	@Column(name = "name", nullable = false)
 	private String name;
 
 	@Column(name = "company_email", nullable = false, unique = true, updatable = false)
@@ -78,4 +95,9 @@ public class Employee {
 	public void onUpdate() {
 		this.updatedAt = LocalDateTime.now();
 	}
+
+	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private Set<UserRoles> roles;
 }

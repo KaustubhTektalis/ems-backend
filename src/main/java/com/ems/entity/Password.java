@@ -1,4 +1,4 @@
-package entity;
+package com.ems.entity;
 
 import java.time.LocalDateTime;
 
@@ -28,6 +28,13 @@ public class Password {
 	@Id
 	@Column(name = "emp_id", nullable = false, updatable = false)
 	private String empId;
+	
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	@JoinColumn(name = "emp_id")
+	private Employee employee;
+	
 
 	@Column(name = "password", nullable = false)
 	private String password;
@@ -52,10 +59,4 @@ public class Password {
 	public void onUpdate() {
 		this.updatedAt = LocalDateTime.now();
 	}
-
-	@OneToOne(fetch = FetchType.LAZY)
-	@MapsId
-
-	@JoinColumn(name = "emp_id")
-	private Employee employee;
 }

@@ -1,13 +1,13 @@
-package entity;
+package com.ems.entity;
 
-import enums.RolesEnum;
+import com.ems.enums.RolesEnum;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
 @Table(name = "set_role_id")
 @Data
-public class RoleMaster {
+public class Roles {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

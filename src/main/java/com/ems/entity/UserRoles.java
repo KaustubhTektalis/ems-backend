@@ -1,4 +1,4 @@
-package entity;
+package com.ems.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
@@ -10,7 +10,9 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDateTime;
 
@@ -23,28 +25,26 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Roles {
-
+public class UserRoles {
+	
 	@EmbeddedId
 	private SetCompKey comp;
 
 	@ManyToOne
 	@MapsId("empId")
 	@JoinColumn(name = "emp_id")
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
 	private Employee employee;
 
 	@ManyToOne
 	@MapsId("roleId")
 	@JoinColumn(name = "role_id")
-	private RoleMaster role;
+	private Roles role;
 
 	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
-
-	@Column(name = "role_active", nullable = false)
-	private Boolean isActive;
-
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
