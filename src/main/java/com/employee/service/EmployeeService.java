@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import com.employee.dto.CreateEmployeeRequestDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.entity.Employee;
-import com.employee.entity.Password;
+import com.employee.entity.User;
 import com.employee.entity.Roles;
 import com.employee.entity.SetCompKey;
 import com.employee.entity.UserRoles;
@@ -53,7 +53,7 @@ public class EmployeeService {
     	Employee savedEmployee = employeeRepository.save(employee);
 
 
-        Password password = Password.builder()
+        User password = User.builder()
                 .employee(savedEmployee)
                 .password("pass")
                 .build();
