@@ -8,7 +8,7 @@ import com.employee.enums.RolesEnum;
 import lombok.Data;
 
 @Data
-public class CreateEmployeeRequestDTO {
+public class CreateEmployeeDTO {
 
     private String name;
     private String companyEmail;

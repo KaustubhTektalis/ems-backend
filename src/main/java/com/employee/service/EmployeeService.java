@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.employee.dto.CreateEmployeeRequestDTO;
+import com.employee.dto.CreateEmployeeDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.entity.Employee;
 import com.employee.entity.User;
@@ -35,8 +35,7 @@ public class EmployeeService {
     private EntityManager entityManager;
 
     @Transactional
-    public EmployeeResponseDTO createEmployee(CreateEmployeeRequestDTO dto) {
-
+    public EmployeeResponseDTO createEmployee(CreateEmployeeDTO dto) {
     	Employee employee = Employee.builder()
                 .name(dto.getName())
                 .companyEmail(dto.getCompanyEmail())
@@ -75,10 +74,8 @@ public class EmployeeService {
 
         employee.setRoles(userRoles);
 
-        return buildResponse(savedEmployee);
+        return employeeDetails(savedEmployee);
     }
-
-
 
     public Page<EmployeeResponseDTO> getAllEmployees(Pageable pageable) {
         return employeeRepository.findByIsEmployeeActiveTrue(pageable);
@@ -107,9 +104,8 @@ public class EmployeeService {
         if (!Boolean.TRUE.equals(employee.getIsEmployeeActive())) {
             throw new EntityNotFoundException("Employee is not active");
         }
-        return buildResponse(employee);
+        return employeeDetails(employee);
     }
-    
 
 
     public void deleteEmployee(String empId) {
@@ -121,9 +117,9 @@ public class EmployeeService {
 		employee.setDateOfExit(LocalDate.now());
 		employeeRepository.save(employee);
     }
+
     
-    
-    private EmployeeResponseDTO buildResponse(Employee employee) {
+    private EmployeeResponseDTO employeeDetails(Employee employee) {
         return EmployeeResponseDTO.builder()
         		.empId(employee.getEmpId())
                 .name(employee.getName())

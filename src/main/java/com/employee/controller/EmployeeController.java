@@ -7,8 +7,7 @@ import java.time.LocalDate;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.employee.dto.CreateEmployeeRequestDTO;
+import com.employee.dto.CreateEmployeeDTO;
 import com.employee.dto.EmployeeResponseDTO;
 import com.employee.service.EmployeeService;
 
@@ -24,7 +23,7 @@ public class EmployeeController {
 
     @PostMapping("/employee")
     public EmployeeResponseDTO addEmployee(
-            @RequestBody CreateEmployeeRequestDTO request) {
+            @RequestBody CreateEmployeeDTO request) {
 
         return employeeService.createEmployee(request);
     }

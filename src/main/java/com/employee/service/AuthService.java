@@ -1,5 +1,5 @@
 package com.employee.service;
 
-public class AuthServiceImpl {
+public class AuthService {
 
 }
