@@ -1,5 +1,6 @@
 package com.employee.serviceimpl;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,6 +21,7 @@ import com.employee.repository.RolesRepository;
 import com.employee.service.EmployeeService;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 
@@ -100,10 +102,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public void deleteEmployee(String empId) {
 
-        Employee employee = employeeRepository.findById(empId)
-                .orElseThrow(() -> new RuntimeException("Employee not found"));
+    	Employee employee = employeeRepository.findById(empId)
+				.orElseThrow(() -> new EntityNotFoundException("Employee with id " + empId + " not found"));
 
-        employeeRepository.delete(employee);
+    	employee.setIsEmployeeActive(false);
+		employee.setDateOfExit(LocalDate.now());
+		employeeRepository.save(employee);
     }
 
     private EmployeeResponseDTO buildResponse(Employee employee) {

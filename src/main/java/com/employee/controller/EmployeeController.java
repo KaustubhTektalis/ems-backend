@@ -2,6 +2,7 @@ package com.employee.controller;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.employee.dto.CreateEmployeeRequestDTO;
@@ -31,17 +32,17 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping("/employees/{empId}")
+    @GetMapping("/employee/{empId}")
     public EmployeeResponseDTO getEmployeeById(
             @PathVariable String empId) {
 
         return employeeService.getEmployeeById(empId);
     }
 
-    @DeleteMapping("/{empId}")
-    public String deleteEmployee(@PathVariable String empId) {
+    @DeleteMapping("/employee/{empId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable String empId) {
 
         employeeService.deleteEmployee(empId);
-        return "Employee deleted successfully";
+        return ResponseEntity.ok("Employee soft deleted successfully");
     }
 }
