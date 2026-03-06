@@ -1,4 +1,4 @@
-package com.employee.serviceimpl;
+package com.employee.service;
 
 public class AuthServiceImpl {
 

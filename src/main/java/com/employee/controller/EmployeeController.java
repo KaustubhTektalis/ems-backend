@@ -1,7 +1,11 @@
 package com.employee.controller;
 
-import java.util.List;
+import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.employee.dto.CreateEmployeeRequestDTO;
@@ -26,22 +30,32 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees")
-    public List<EmployeeResponseDTO> getAllEmployees() {
-
-        return employeeService.getAllEmployees();
+    public Page<EmployeeResponseDTO> getAllEmployees(Pageable pageable) {
+        return employeeService.getAllEmployees(pageable);
     }
 
-    @GetMapping("/employees/{empId}")
-    public EmployeeResponseDTO getEmployeeById(
-            @PathVariable String empId) {
-
+    @GetMapping("/id/{empId}")
+    public EmployeeResponseDTO getEmployeeById(@PathVariable String empId) {
         return employeeService.getEmployeeById(empId);
     }
+    
+    @GetMapping("/name/{name}")
+    public Page<EmployeeResponseDTO> getEmployeesByName(@PathVariable String name, Pageable pageable) {
+        return employeeService.getEmployeesByName(name, pageable);
+    }
+    @GetMapping("/department/{department}")
+    public Page<EmployeeResponseDTO> getEmployeesByDepartment(@PathVariable String department, Pageable pageable) {
+        return employeeService.getEmployeesByDepartment(department, pageable);
+    }
+    @GetMapping("/date/{date}")
+    public Page<EmployeeResponseDTO> getEmployeesByJoiningDate(@PathVariable LocalDate date, Pageable pageable) {
+        return employeeService.getEmployeesByJoiningDate(date, pageable);
+    }
 
-    @DeleteMapping("/{empId}")
-    public String deleteEmployee(@PathVariable String empId) {
+    @DeleteMapping("/employee/{empId}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable String empId) {
 
         employeeService.deleteEmployee(empId);
-        return "Employee deleted successfully";
+        return ResponseEntity.ok("Employee soft deleted successfully");
     }
 }
