@@ -7,3 +7,4 @@ import com.employee.entity.AuditLog;
 public interface AuditLogRepository extends JpaRepository<AuditLog, Long>{
  
 }
+
