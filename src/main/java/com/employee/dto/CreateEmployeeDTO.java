@@ -5,9 +5,15 @@ import java.util.Set;
 
 import com.employee.enums.RolesEnum;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CreateEmployeeDTO {
 
     private String name;

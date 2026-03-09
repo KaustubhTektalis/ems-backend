@@ -8,7 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.employee.dto.CreateEmployeeDTO;
-import com.employee.dto.EmployeeResponseDTO;
+import com.employee.dto.EmployeesDetailsDTO;
+import com.employee.dto.UpdateAllDTO;
 import com.employee.service.EmployeeService;
 
 import lombok.RequiredArgsConstructor;
@@ -19,42 +20,68 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*")
 public class EmployeeController {
 
-    private final EmployeeService employeeService;
+	private final EmployeeService employeeService;
 
-    @PostMapping("/employee")
-    public EmployeeResponseDTO addEmployee(
-            @RequestBody CreateEmployeeDTO request) {
+	@PostMapping("/employee")
+	public EmployeesDetailsDTO addEmployee(@RequestBody CreateEmployeeDTO request) {
 
-        return employeeService.createEmployee(request);
+		return employeeService.createEmployee(request);
+	}
+
+	@GetMapping("/employees")
+	public Page<EmployeesDetailsDTO> getAllEmployees(Pageable pageable) {
+		return employeeService.getAllEmployees(pageable);
+	}
+
+	@GetMapping("/id/{empId}")
+	public EmployeesDetailsDTO getEmployeeById(@PathVariable String empId) {
+		return employeeService.getEmployeeById(empId);
+	}
+
+	@GetMapping("/name/{name}")
+	public Page<EmployeesDetailsDTO> getEmployeesByName(@PathVariable String name, Pageable pageable) {
+		return employeeService.getEmployeesByName(name, pageable);
+	}
+
+	@GetMapping("/department/{department}")
+	public Page<EmployeesDetailsDTO> getEmployeesByDepartment(@PathVariable String department, Pageable pageable) {
+		return employeeService.getEmployeesByDepartment(department, pageable);
+	}
+
+	@GetMapping("/date/{date}")
+	public Page<EmployeesDetailsDTO> getEmployeesByJoiningDate(@PathVariable LocalDate date, Pageable pageable) {
+		return employeeService.getEmployeesByJoiningDate(date, pageable);
+	}
+
+	@DeleteMapping("/employee/{empId}")
+	public ResponseEntity<String> deleteEmployee(@PathVariable String empId) {
+
+		employeeService.deleteEmployee(empId);
+		return ResponseEntity.ok("Employee soft deleted successfully");
+	}
+
+	@PutMapping("/update/all/{empId}")
+    public EmployeesDetailsDTO updateAll(@PathVariable String empId, @RequestBody UpdateAllDTO dto) {
+    	return employeeService.updateAll(empId, dto);
     }
 
-    @GetMapping("/employees")
-    public Page<EmployeeResponseDTO> getAllEmployees(Pageable pageable) {
-        return employeeService.getAllEmployees(pageable);
-    }
+	@PatchMapping("/update/name/{empId}")
+	public EmployeesDetailsDTO updateName(@PathVariable String empId, @RequestParam String name) {
+		return employeeService.updateName(empId, name);
+	}
 
-    @GetMapping("/id/{empId}")
-    public EmployeeResponseDTO getEmployeeById(@PathVariable String empId) {
-        return employeeService.getEmployeeById(empId);
-    }
-    
-    @GetMapping("/name/{name}")
-    public Page<EmployeeResponseDTO> getEmployeesByName(@PathVariable String name, Pageable pageable) {
-        return employeeService.getEmployeesByName(name, pageable);
-    }
-    @GetMapping("/department/{department}")
-    public Page<EmployeeResponseDTO> getEmployeesByDepartment(@PathVariable String department, Pageable pageable) {
-        return employeeService.getEmployeesByDepartment(department, pageable);
-    }
-    @GetMapping("/date/{date}")
-    public Page<EmployeeResponseDTO> getEmployeesByJoiningDate(@PathVariable LocalDate date, Pageable pageable) {
-        return employeeService.getEmployeesByJoiningDate(date, pageable);
-    }
+	@PatchMapping("/update/mail/{empId}")
+	public EmployeesDetailsDTO updatePersonalMail(@PathVariable String empId, @RequestParam String personalMail) {
+		return employeeService.updatePersonalMail(empId, personalMail);
+	}
 
-    @DeleteMapping("/employee/{empId}")
-    public ResponseEntity<String> deleteEmployee(@PathVariable String empId) {
+	@PatchMapping("/update/phone/{empId}")
+	public EmployeesDetailsDTO updatePhoneNumber(@PathVariable String empId, @RequestParam String phoneNumber) {
+		return employeeService.updatePhoneNumber(empId, phoneNumber);
+	}
 
-        employeeService.deleteEmployee(empId);
-        return ResponseEntity.ok("Employee soft deleted successfully");
-    }
+	@PatchMapping("/update/address/{empId}")
+	public EmployeesDetailsDTO updateAddress(@PathVariable String empId, @RequestParam String address) {
+		return employeeService.updateAddress(empId, address);
+	}
 }
