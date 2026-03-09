@@ -9,10 +9,10 @@ import com.employee.repository.SequenceRepository;
 @Component
 public class EmployeeIdGenerator {
 	@Autowired
-	private final SequenceRepository sequenceRepoistory;
-	public EmployeeIdGenerator(SequenceRepository sequenceRepoistory) {
+	private  SequenceRepository sequenceRepoistory;
+	/*public EmployeeIdGenerator(SequenceRepository sequenceRepoistory) {
 		this.sequenceRepoistory= sequenceRepoistory;
-	}
+	}*/
 	public String generateEmpId() {
 		Long seq=sequenceRepoistory.getNextEmployeeId();
 		return String.format("TT%04d", seq);

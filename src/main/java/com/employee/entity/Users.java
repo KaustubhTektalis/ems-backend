@@ -48,5 +48,6 @@ public class Users {
 	@MapsId
 	@JoinColumn(name="emp_id")
 	private Employee employee;
+
  
 }

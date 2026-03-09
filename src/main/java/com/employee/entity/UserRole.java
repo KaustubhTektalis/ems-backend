@@ -36,5 +36,6 @@ public class UserRole {
 	private Role role;
 	@CreationTimestamp
 	private LocalDateTime createdAt;
+
  
 }
