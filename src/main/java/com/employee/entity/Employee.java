@@ -43,7 +43,7 @@ public class Employee {
 	private LocalDate dateOfJoin;
 	@Column(name="date_of_birth",nullable=false)
 	private LocalDate dateOfBirth;
-	private String description;
+    private String description;
 	@Column(name="date_of_exit")
 	private LocalDate dateOfExit;
 	@Column(name="is_employee_active")

@@ -1,5 +1,7 @@
 package com.employee.servicesImpl;
 
+import org.springframework.stereotype.Service;
+
 import com.employee.entity.Role;
 import com.employee.entity.RoleName;
 import com.employee.entity.UserRole;
@@ -10,6 +12,7 @@ import com.employee.services.RoleService;
 
 import jakarta.transaction.Transactional;
 
+@Service
 public class RoleServiceImpl implements RoleService{
 	private  final RoleRepository roleRepository;
 	private  final UserRoleRepository userRoleRepository;
