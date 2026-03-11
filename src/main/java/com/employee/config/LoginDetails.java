@@ -47,7 +47,7 @@ public class LoginDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return user.isUserActive();
+        return user.getIsUserActive();
     }
 
     @Override public boolean isAccountNonExpired(){ return true; }

@@ -8,5 +8,7 @@ import com.employee.entity.Roles;
 import com.employee.enums.RolesEnum;
  
 public interface RoleRepository extends JpaRepository<Roles,Integer>{
- Optional<Roles>findByRole(RolesEnum role);
+	Optional<Roles> findByRole(RolesEnum role);
+	
+ 
 }

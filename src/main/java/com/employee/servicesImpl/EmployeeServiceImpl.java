@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.employee.dto.CreateEmployeeDTO;
 import com.employee.dto.EmployeesDetailsDTO;
 import com.employee.dto.UpdateAllDTO;
@@ -28,11 +30,12 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeServiceImpl implements EmployeeService{
+public class EmployeeServiceImpl implements EmployeeService {
 
 	private final EmployeeRepository employeeRepository;
 	private final RoleRepository rolesRepository;
 	private final UserRepository passwordRepository;
+    private final PasswordEncoder passwordEncoder;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -45,14 +48,16 @@ public class EmployeeServiceImpl implements EmployeeService{
 				.dateOfBirth(dto.getDateOfBirth()).description(dto.getDescription()).build();
 
 		Employee savedEmployee = employeeRepository.save(employee);
-
-		Users password = Users.builder().employee(savedEmployee).password("pass").build();
+		
+		
+		Users password = Users.builder().employee(savedEmployee).password(passwordEncoder.encode("pass")).build();
 
 		passwordRepository.save(password);
 
 		Set<UserRoles> userRoles = dto.getRoles().stream().map(roleEnum -> {
 
-			Roles role = rolesRepository.findByRole(roleEnum);
+			Roles role = rolesRepository.findByRole(roleEnum)
+					.orElseThrow(() -> new EntityNotFoundException("Role not found: " + roleEnum));
 
 			return UserRoles.builder().employee(savedEmployee).role(role)
 					.id(new UserRoleId(savedEmployee.getEmpId(), role.getRoleId())).build();
@@ -84,8 +89,8 @@ public class EmployeeServiceImpl implements EmployeeService{
 	public EmployeesDetailsDTO getEmployeeById(String empId) {
 		EmployeesDetailsDTO employee = employeeRepository.findByEmpIdAndIsEmployeeActiveTrue(empId);
 		if (employee == null) {
-	        throw new EntityNotFoundException("Employee not found with id: " + empId);
-	    }
+			throw new EntityNotFoundException("Employee not found with id: " + empId);
+		}
 		return employee;
 	}
 
@@ -151,7 +156,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 	// ------------------------------------------------------------------------------------------------------
 
-	//Helper
+	// Helper
 	private Employee getActiveEmployee(String empId) {
 		Employee employee = employeeRepository.findById(empId)
 				.orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + empId));
@@ -165,7 +170,7 @@ public class EmployeeServiceImpl implements EmployeeService{
 
 	// ------------------------------------------------------------------------------------------------------
 
-	//Mapper
+	// Mapper
 	private EmployeesDetailsDTO employeeDetails(Employee employee) {
 		return EmployeesDetailsDTO.builder().empId(employee.getEmpId()).name(employee.getName())
 				.companyMail(employee.getCompanyEmail()).department(employee.getDepartment())

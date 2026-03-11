@@ -61,9 +61,9 @@ public class EmployeeController {
 	}
 
 	@PutMapping("/update/all/{empId}")
-    public EmployeesDetailsDTO updateAll(@PathVariable String empId, @RequestBody UpdateAllDTO dto) {
-    	return employeeService.updateAll(empId, dto);
-    }
+	public EmployeesDetailsDTO updateAll(@PathVariable String empId, @RequestBody UpdateAllDTO dto) {
+		return employeeService.updateAll(empId, dto);
+	}
 
 	@PatchMapping("/update/name/{empId}")
 	public EmployeesDetailsDTO updateName(@PathVariable String empId, @RequestParam String name) {

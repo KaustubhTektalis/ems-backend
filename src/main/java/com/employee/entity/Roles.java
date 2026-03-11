@@ -18,4 +18,5 @@ public class Roles {
 	@Enumerated(EnumType.STRING)
 	@Column(name = "role", nullable = false, unique = true)
 	private RolesEnum role;
+
 }

@@ -35,7 +35,7 @@ public class Users {
 
 	@Builder.Default
 	@Column(name = "is_user_active", nullable = false)
-	private Boolean isEmployeeActive = true;
+	private Boolean isUserActive = true;
 
 	@Column(name = "password_changed_at")
 	@UpdateTimestamp
@@ -50,4 +50,5 @@ public class Users {
 	@MapsId
 	@JoinColumn(name = "emp_id")
 	private Employee employee;
+
 }

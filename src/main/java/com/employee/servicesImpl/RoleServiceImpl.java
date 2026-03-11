@@ -10,7 +10,7 @@ import com.employee.repository.EmployeeRepository;
 import com.employee.repository.RoleRepository;
 import com.employee.repository.UserRoleRepository;
 import com.employee.services.RoleService;
-import com.employee.util.UserRoleId;
+import com.employee.utils.UserRoleId;
 
 import jakarta.transaction.Transactional;
 @Service
@@ -57,9 +57,9 @@ public class RoleServiceImpl implements RoleService{
 	            .findByRole(RolesEnum.valueOf(roleName))
 	            .orElseThrow(() -> new RuntimeException("Role not found"));
 
-	    Employee employee = employeeRepository
-	            .findById(empId)
-	            .orElseThrow(() -> new RuntimeException("Employee not found"));
+//	    Employee employee = employeeRepository
+//	            .findById(empId)
+//	            .orElseThrow(() -> new RuntimeException("Employee not found"));
 
 	    UserRoleId id = new UserRoleId(empId, role.getRoleId());
 
