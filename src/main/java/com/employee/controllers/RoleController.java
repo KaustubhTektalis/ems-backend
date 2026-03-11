@@ -16,13 +16,13 @@ public class RoleController {
 		this.roleService = roleService;
 	}
 
-	@PostMapping("/assign")
+	@PostMapping("/role/assign")
 	public void assignRole(@RequestParam String empId, @RequestParam String role) {
 		roleService.assignRole(empId, role);
 
 	}
 
-	@PostMapping("/remove")
+	@PostMapping("/role/remove")
 	public void removeRole(@RequestParam String empId, @RequestParam String role) {
 		roleService.removeRole(empId, role);
 
