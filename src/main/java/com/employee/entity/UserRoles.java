@@ -19,16 +19,18 @@ import java.time.LocalDateTime;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.employee.utils.UserRoleId;
+
 @Entity
 @Data
-@Table(name = "roles")
+@Table(name = "user_roles")
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRoles {
 	
 	@EmbeddedId
-	private SetCompKey comp;
+	private UserRoleId id;
 
 	@ManyToOne
 	@MapsId("empId")
@@ -45,8 +47,5 @@ public class UserRoles {
 	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
-	@UpdateTimestamp
-	@Column(name = "updated_at")
-	private LocalDateTime updatedAt;
 
 }

@@ -77,7 +77,7 @@ public class Employee {
 	private LocalDate dateOfExit;
 
 	@Builder.Default
-	@Column(name = "employee_active", nullable = false)
+	@Column(name = "is_employee_active", nullable = false)
 	private Boolean isEmployeeActive = true;
 
 	@Column(name = "created_at", updatable = false)

@@ -1,4 +1,4 @@
-package com.employee.service;
+package com.employee.servicesImpl;
 
 import java.time.LocalDate;
 import java.util.Set;
@@ -12,13 +12,14 @@ import com.employee.dto.CreateEmployeeDTO;
 import com.employee.dto.EmployeesDetailsDTO;
 import com.employee.dto.UpdateAllDTO;
 import com.employee.entity.Employee;
-import com.employee.entity.User;
+import com.employee.entity.Users;
 import com.employee.entity.Roles;
-import com.employee.entity.SetCompKey;
 import com.employee.entity.UserRoles;
 import com.employee.repository.EmployeeRepository;
-import com.employee.repository.PasswordRepository;
-import com.employee.repository.RolesRepository;
+import com.employee.repository.UserRepository;
+import com.employee.repository.RoleRepository;
+import com.employee.services.EmployeeService;
+import com.employee.utils.UserRoleId;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,11 +28,11 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class EmployeeService {
+public class EmployeeServiceImpl implements EmployeeService{
 
 	private final EmployeeRepository employeeRepository;
-	private final RolesRepository rolesRepository;
-	private final PasswordRepository passwordRepository;
+	private final RoleRepository rolesRepository;
+	private final UserRepository passwordRepository;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -45,7 +46,7 @@ public class EmployeeService {
 
 		Employee savedEmployee = employeeRepository.save(employee);
 
-		User password = User.builder().employee(savedEmployee).password("pass").build();
+		Users password = Users.builder().employee(savedEmployee).password("pass").build();
 
 		passwordRepository.save(password);
 
@@ -54,7 +55,7 @@ public class EmployeeService {
 			Roles role = rolesRepository.findByRole(roleEnum);
 
 			return UserRoles.builder().employee(savedEmployee).role(role)
-					.comp(new SetCompKey(savedEmployee.getEmpId(), role.getRoleId())).build();
+					.id(new UserRoleId(savedEmployee.getEmpId(), role.getRoleId())).build();
 		}).collect(Collectors.toSet());
 
 		employee.setRoles(userRoles);

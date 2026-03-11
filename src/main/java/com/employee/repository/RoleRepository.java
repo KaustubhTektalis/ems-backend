@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import com.employee.entity.Roles;
 import com.employee.enums.RolesEnum;
 @Repository
-public interface RolesRepository extends JpaRepository<Roles, Integer> {
+public interface RoleRepository extends JpaRepository<Roles, Integer> {
 
     Roles findByRole(RolesEnum role);
 

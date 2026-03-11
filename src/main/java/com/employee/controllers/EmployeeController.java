@@ -1,4 +1,4 @@
-package com.employee.controller;
+package com.employee.controllers;
 
 import org.springframework.data.domain.Pageable;
 
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.employee.dto.CreateEmployeeDTO;
 import com.employee.dto.EmployeesDetailsDTO;
 import com.employee.dto.UpdateAllDTO;
-import com.employee.service.EmployeeService;
+import com.employee.servicesImpl.EmployeeServiceImpl;
 
 import lombok.RequiredArgsConstructor;
 
@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*")
 public class EmployeeController {
 
-	private final EmployeeService employeeService;
+	private final EmployeeServiceImpl employeeService;
 
 	@PostMapping("/employee")
 	public EmployeesDetailsDTO addEmployee(@RequestBody CreateEmployeeDTO request) {

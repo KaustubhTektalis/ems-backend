@@ -1,4 +1,4 @@
-package com.employee.entity;
+package com.employee.utils;
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Embeddable
 @NoArgsConstructor
 @AllArgsConstructor
-public class SetCompKey implements Serializable {
+public class UserRoleId implements Serializable {
 	private String empId;
 	private Integer roleId;
 }
