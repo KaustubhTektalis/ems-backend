@@ -33,15 +33,12 @@ import lombok.ToString;
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Employee {
 
-    @Id
-    @GeneratedValue(generator = "emp-id-generator")
-    @GenericGenerator(
-        name = "emp-id-generator",
-        strategy = "com.employee.utils.EmployeeIdGenerator"
-    )
-    @EqualsAndHashCode.Include
-    @Column(name = "emp_id")
-    private String empId;
+	@Id
+	@GeneratedValue(generator = "emp-id-generator")
+	@GenericGenerator(name = "emp-id-generator", strategy = "com.employee.utils.EmployeeIdGenerator")
+	@EqualsAndHashCode.Include
+	@Column(name = "emp_id")
+	private String empId;
 
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -82,7 +79,7 @@ public class Employee {
 
 	@Column(name = "created_at", updatable = false)
 	private LocalDateTime createdAt;
-	
+
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
@@ -98,7 +95,7 @@ public class Employee {
 	}
 
 	@OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    private Set<UserRoles> roles;
+	@ToString.Exclude
+	@EqualsAndHashCode.Exclude
+	private Set<UserRoles> roles;
 }

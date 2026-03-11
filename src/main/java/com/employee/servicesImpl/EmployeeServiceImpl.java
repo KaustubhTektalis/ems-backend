@@ -15,6 +15,8 @@ import com.employee.dto.EmployeesDetailsDTO;
 import com.employee.dto.UpdateAllDTO;
 import com.employee.entity.Employee;
 import com.employee.entity.Users;
+import com.employee.exceptions.DuplicateEmployeeException;
+import com.employee.exceptions.InactiveEmployeeException;
 import com.employee.entity.Roles;
 import com.employee.entity.UserRoles;
 import com.employee.repository.EmployeeRepository;
@@ -35,21 +37,31 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private final EmployeeRepository employeeRepository;
 	private final RoleRepository rolesRepository;
 	private final UserRepository passwordRepository;
-    private final PasswordEncoder passwordEncoder;
+	private final PasswordEncoder passwordEncoder;
 
 	@PersistenceContext
 	private EntityManager entityManager;
 
 	@Transactional
 	public EmployeesDetailsDTO createEmployee(CreateEmployeeDTO dto) {
+
+		if (employeeRepository.existsByCompanyEmail(dto.getCompanyEmail())) {
+			throw new DuplicateEmployeeException("Employee already exists with email: " + dto.getCompanyEmail());
+		}
+		if (employeeRepository.existsByPersonalEmail(dto.getPersonalEmail())) {
+			throw new DuplicateEmployeeException("Email already exists" + dto.getCompanyEmail());
+		}
+		if (employeeRepository.existsByPhoneNumber(dto.getPhoneNumber())) {
+			throw new DuplicateEmployeeException("Phone number already exists" + dto.getPhoneNumber());
+		}
+
 		Employee employee = Employee.builder().name(dto.getName()).companyEmail(dto.getCompanyEmail())
 				.personalEmail(dto.getPersonalEmail()).phoneNumber(dto.getPhoneNumber()).address(dto.getAddress())
 				.department(dto.getDepartment()).designation(dto.getDesignation()).dateOfJoin(dto.getDateOfJoin())
 				.dateOfBirth(dto.getDateOfBirth()).description(dto.getDescription()).build();
 
 		Employee savedEmployee = employeeRepository.save(employee);
-		
-		
+
 		Users password = Users.builder().employee(savedEmployee).password(passwordEncoder.encode("pass")).build();
 
 		passwordRepository.save(password);
@@ -162,7 +174,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + empId));
 
 		if (!employee.getIsEmployeeActive()) {
-			throw new IllegalStateException("Cannot update inactive employee");
+			throw new InactiveEmployeeException("employee is inactive");
 		}
 
 		return employee;

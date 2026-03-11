@@ -9,13 +9,13 @@ import lombok.Data;
 @Builder
 public class UserDetailsDTO {
 
-    private String empId;
-    private String name;
-    private String companyEmail;
-    private String department;
-    private String designation;
-    private String personalEmail;
-    private String address;
-    private String phoneNumber;
-    private LocalDate dateOfJoin;
+	private String empId;
+	private String name;
+	private String companyEmail;
+	private String department;
+	private String designation;
+	private String personalEmail;
+	private String address;
+	private String phoneNumber;
+	private LocalDate dateOfJoin;
 }

@@ -27,7 +27,7 @@ import com.employee.utils.UserRoleId;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserRoles {
-	
+
 	@EmbeddedId
 	private UserRoleId id;
 

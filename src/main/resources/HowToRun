@@ -1,0 +1,102 @@
+
+1️⃣ Start Your Spring Boot Server
+
+Run the application.
+
+You should see:
+
+Tomcat started on port 8765
+
+So your base URL is:
+
+http://localhost:8765
+2️⃣ Login to Get JWT Token
+Request
+
+POST
+
+http://localhost:8765/auth/login
+Headers
+Content-Type: application/json
+Body
+{
+  "username": "TT0001",
+  "password": "pass"
+}
+Expected Response
+{
+  "accessToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9....",
+  "refreshToken": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...."
+}
+
+Copy the accessToken.
+
+3️⃣ Store Token in Postman (Optional but Recommended)
+
+In Tests tab of login request:
+
+pm.environment.set("token", pm.response.json().accessToken);
+
+Now Postman automatically stores the token.
+
+4️⃣ Add Employee (Authorized Request)
+Request
+
+POST
+http://localhost:8765/employee
+
+Headers
+Authorization: Bearer token: token
+Content-Type: application/json
+
+Body
+{
+  "name": "Rohit Kumar",
+  "companyEmail": "rohit.kumar@techwave.com",
+  "personalEmail": "rohitkumar@gmail.com",
+  "phoneNumber": "9876543210",
+  "address": "Hyderabad",
+  "department": "IT",
+  "designation": "Backend Developer",
+  "dateOfJoin": "2024-01-01",
+  "dateOfBirth": "1996-05-20",
+  "description": "Spring Boot developer",
+  "roles": ["EMPLOYEE"]
+}
+
+5️⃣ Expected Response
+{
+  "empId": "TT0002",
+  "name": "Rohit Kumar",
+  "companyMail": "rohit.kumar@techwave.com",
+  "department": "IT",
+  "personalMail": "rohitkumar@gmail.com",
+  "address": "Hyderabad",
+  "phoneNumber": "9876543210",
+  "designation": "Backend Developer",
+  "dateOfJoin": "2024-01-01"
+}
+
+6️⃣ Flow Diagram
+POST /auth/login
+        │
+        ▼
+Verify username/password
+        │
+        ▼
+Generate JWT token
+        │
+        ▼
+Use token in Authorization header
+        │
+        ▼
+POST /employee
+        │
+        ▼
+JwtAuthenticationFilter validates token
+        │
+        ▼
+Controller executes
+        │
+        ▼
+Employee created

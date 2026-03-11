@@ -13,62 +13,61 @@ import com.employee.services.RoleService;
 import com.employee.utils.UserRoleId;
 
 import jakarta.transaction.Transactional;
+
 @Service
-public class RoleServiceImpl implements RoleService{
-	private  final RoleRepository roleRepository;
-	private  final UserRoleRepository userRoleRepository;
+public class RoleServiceImpl implements RoleService {
+	private final RoleRepository roleRepository;
+	private final UserRoleRepository userRoleRepository;
 	private final EmployeeRepository employeeRepository;
-	public RoleServiceImpl(RoleRepository roleRepository,UserRoleRepository userRoleRepository, EmployeeRepository employeeRepository) {
-		this.roleRepository=roleRepository;
-		this.userRoleRepository=userRoleRepository;
-		this.employeeRepository=employeeRepository;
+
+	public RoleServiceImpl(RoleRepository roleRepository, UserRoleRepository userRoleRepository,
+			EmployeeRepository employeeRepository) {
+		this.roleRepository = roleRepository;
+		this.userRoleRepository = userRoleRepository;
+		this.employeeRepository = employeeRepository;
 	}
+
 	@Override
 	@Transactional
 	public void assignRole(String empId, String roleName) {
 
-	    Roles role = roleRepository
-	            .findByRole(RolesEnum.valueOf(roleName))
-	            .orElseThrow(() -> new RuntimeException("Role not found"));
+		Roles role = roleRepository.findByRole(RolesEnum.valueOf(roleName))
+				.orElseThrow(() -> new RuntimeException("Role not found"));
 
-	    Employee employee = employeeRepository
-	            .findById(empId)
-	            .orElseThrow(() -> new RuntimeException("Employee not found"));
+		Employee employee = employeeRepository.findById(empId)
+				.orElseThrow(() -> new RuntimeException("Employee not found"));
 
-	    UserRoleId id = new UserRoleId(empId, role.getRoleId());
+		UserRoleId id = new UserRoleId(empId, role.getRoleId());
 
-	    if (userRoleRepository.existsById(id)) {
-	        throw new RuntimeException("Role is already assigned");
-	    }
+		if (userRoleRepository.existsById(id)) {
+			throw new RuntimeException("Role is already assigned");
+		}
 
-	    UserRoles userRole = new UserRoles();
-	    userRole.setId(id);
-	    userRole.setEmployee(employee);  
-	    userRole.setRole(role);
+		UserRoles userRole = new UserRoles();
+		userRole.setId(id);
+		userRole.setEmployee(employee);
+		userRole.setRole(role);
 
-	    userRoleRepository.save(userRole);
+		userRoleRepository.save(userRole);
 	}
-	
+
 	@Override
 	@Transactional
 	public void removeRole(String empId, String roleName) {
 
-	    Roles role = roleRepository
-	            .findByRole(RolesEnum.valueOf(roleName))
-	            .orElseThrow(() -> new RuntimeException("Role not found"));
+		Roles role = roleRepository.findByRole(RolesEnum.valueOf(roleName))
+				.orElseThrow(() -> new RuntimeException("Role not found"));
 
 //	    Employee employee = employeeRepository
 //	            .findById(empId)
 //	            .orElseThrow(() -> new RuntimeException("Employee not found"));
 
-	    UserRoleId id = new UserRoleId(empId, role.getRoleId());
+		UserRoleId id = new UserRoleId(empId, role.getRoleId());
 
-	    UserRoles userRole = userRoleRepository
-	            .findById(id)
-	            .orElseThrow(() -> new RuntimeException("Role is not assigned"));
+		UserRoles userRole = userRoleRepository.findById(id)
+				.orElseThrow(() -> new RuntimeException("Role is not assigned"));
 
-	    userRoleRepository.delete(userRole);
+		userRoleRepository.delete(userRole);
 	}
-	
 
 }

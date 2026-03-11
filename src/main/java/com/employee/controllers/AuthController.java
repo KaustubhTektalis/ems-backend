@@ -8,36 +8,29 @@ import com.employee.dto.LoginResponse;
 import com.employee.dto.RefreshTokenRequest;
 import com.employee.services.AuthService;
 
-
-
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
 
-    private final AuthService authService;
+	private final AuthService authService;
 
-    public AuthController(AuthService authService) {
-        this.authService = authService;
-    }
+	public AuthController(AuthService authService) {
+		this.authService = authService;
+	}
 
-  
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-            @RequestBody LoginRequest request) {
+	@PostMapping("/login")
+	public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
 
-        LoginResponse response = authService.login(request);
+		LoginResponse response = authService.login(request);
 
-        return ResponseEntity.ok(response);
-    }
+		return ResponseEntity.ok(response);
+	}
 
+	@PostMapping("/refresh")
+	public ResponseEntity<LoginResponse> refreshToken(@RequestBody RefreshTokenRequest request) {
 
-    @PostMapping("/refresh")
-    public ResponseEntity<LoginResponse> refreshToken(
-             @RequestBody RefreshTokenRequest request) {
+		LoginResponse response = authService.refreshToken(request);
 
-        LoginResponse response =
-                authService.refreshToken(request);
-
-        return ResponseEntity.ok(response);
-    }
+		return ResponseEntity.ok(response);
+	}
 }

@@ -1,10 +1,9 @@
 package com.employee.entity;
- 
+
 import java.time.LocalDateTime;
- 
- 
+
 import org.hibernate.annotations.CreationTimestamp;
- 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,28 +15,28 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
- 
+
 @Entity
-@Table(name="audit_logs")
+@Table(name = "audit_logs")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
- 
+
 public class AuditLog {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
-	@Column(name = "log_user",nullable=false)
+
+	@Column(name = "log_user", nullable = false)
 	private String user;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String action;
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private String target;
 	@CreationTimestamp
-	@Column(updatable=false)
+	@Column(updatable = false)
 	private LocalDateTime createdAt;
- 
+
 }

@@ -1,6 +1,5 @@
 package com.employee.config;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,65 +18,57 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final LoginDetailsService loginDetailsService;
-    private final JwtAuthenticationFilter jwtFilter;
+	private final LoginDetailsService loginDetailsService;
+	private final JwtAuthenticationFilter jwtFilter;
 
-    public SecurityConfig(LoginDetailsService loginDetailsService,
-                          JwtAuthenticationFilter jwtFilter) {
+	public SecurityConfig(LoginDetailsService loginDetailsService, JwtAuthenticationFilter jwtFilter) {
 
-        this.loginDetailsService = loginDetailsService;
-        this.jwtFilter = jwtFilter;
-    }
+		this.loginDetailsService = loginDetailsService;
+		this.jwtFilter = jwtFilter;
+	}
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+	@Bean
+	public DaoAuthenticationProvider authenticationProvider() {
 
-        DaoAuthenticationProvider provider =
-                new DaoAuthenticationProvider(loginDetailsService);
+		DaoAuthenticationProvider provider = new DaoAuthenticationProvider(loginDetailsService);
 
-        
-        provider.setPasswordEncoder(passwordEncoder());
+		provider.setPasswordEncoder(passwordEncoder());
 
-        return provider;
-    }
+		return provider;
+	}
 
-    @Bean
-    public AuthenticationManager authenticationManager(
-            AuthenticationConfiguration config) throws Exception {
+	@Bean
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 
-        return config.getAuthenticationManager();
-    }
+		return config.getAuthenticationManager();
+	}
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http)
-            throws Exception {
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
-        http
-            .csrf(csrf -> csrf.disable())
+		http.csrf(csrf -> csrf.disable())
 
-            .authorizeHttpRequests(auth -> auth
+				.authorizeHttpRequests(auth -> auth
 
-                    .requestMatchers("/auth/**").permitAll()
+						.requestMatchers("/auth/**").permitAll()
 
-                    .requestMatchers("/admin/**").hasRole("ADMIN")
+						.requestMatchers("/admin/**").hasRole("ADMIN")
 
-                    .requestMatchers("/manager/**").hasRole("MANAGER")
+						.requestMatchers("/manager/**").hasRole("MANAGER")
 
-                    .requestMatchers("/user/**")
-                    .hasAnyRole("USER","ADMIN","MANAGER")
+						.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN", "MANAGER")
 
-                    .anyRequest().authenticated())
+						.anyRequest().authenticated())
 
-            .authenticationProvider(authenticationProvider())
+				.authenticationProvider(authenticationProvider())
 
-            .addFilterBefore(jwtFilter,
-                    UsernamePasswordAuthenticationFilter.class);
+				.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+		return http.build();
+	}
 }

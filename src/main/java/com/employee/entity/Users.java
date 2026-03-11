@@ -45,7 +45,7 @@ public class Users {
 	public void onUpdate() {
 		this.updatedAt = LocalDateTime.now();
 	}
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@MapsId
 	@JoinColumn(name = "emp_id")
