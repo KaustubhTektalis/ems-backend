@@ -1,42 +1,32 @@
 package com.employee.config;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import org.springframework.security.web.SecurityFilterChain;
-
-import com.employee.repository.UserRepository;
-import com.employee.repository.UserRoleRepository;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
-@EnableWebSecurity
 @EnableMethodSecurity
+@EnableWebSecurity
 public class SecurityConfig {
 
-    private final UserRepository userRepository;
-    private final UserRoleRepository userRoleRepository;
+    private final LoginDetailsService loginDetailsService;
+    private final JwtAuthenticationFilter jwtFilter;
 
-    public SecurityConfig(UserRepository userRepository,
-                          UserRoleRepository userRoleRepository) {
-        this.userRepository = userRepository;
-        this.userRoleRepository = userRoleRepository;
-    }
+    public SecurityConfig(LoginDetailsService loginDetailsService,
+                          JwtAuthenticationFilter jwtFilter) {
 
-    @Bean
-    public LoginDetailService userDetailsService() {
-        return new LoginDetailService(userRepository, userRoleRepository);
+        this.loginDetailsService = loginDetailsService;
+        this.jwtFilter = jwtFilter;
     }
 
     @Bean
@@ -45,9 +35,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
+    public DaoAuthenticationProvider authenticationProvider(){
 
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider(userDetailsService());
+        DaoAuthenticationProvider provider =
+                new DaoAuthenticationProvider(loginDetailsService);
+
+        
         provider.setPasswordEncoder(passwordEncoder());
 
         return provider;
@@ -68,19 +61,22 @@ public class SecurityConfig {
             .csrf(csrf -> csrf.disable())
 
             .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/auth/**").permitAll()
-                .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/manager/**").hasRole("MANAGER")
-                .requestMatchers("/user/**")
-                .hasAnyRole("USER","ADMIN","MANAGER")
-                .anyRequest().authenticated()
-            )
+
+                    .requestMatchers("/auth/**").permitAll()
+
+                    .requestMatchers("/admin/**").hasRole("ADMIN")
+
+                    .requestMatchers("/manager/**").hasRole("MANAGER")
+
+                    .requestMatchers("/user/**")
+                    .hasAnyRole("USER","ADMIN","MANAGER")
+
+                    .anyRequest().authenticated())
 
             .authenticationProvider(authenticationProvider())
 
-            .formLogin(form -> form.disable())
-
-            .httpBasic(basic -> {});
+            .addFilterBefore(jwtFilter,
+                    UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

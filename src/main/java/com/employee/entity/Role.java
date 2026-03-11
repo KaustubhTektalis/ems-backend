@@ -1,5 +1,5 @@
-package com.employee.entity;
- 
+package com.employee.entity; // Change to your actual package name
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -13,7 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
- 
+
 @Entity
 @Table(name="roles")
 @Getter
@@ -22,12 +22,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @Builder
 public class Role {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="role_id")
-	private Integer roleId;
-	@Enumerated(EnumType.STRING)
-	@Column(columnDefinition = "role_enum",nullable=false,unique=true)
-	private RoleName role;
- 
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="role_id")
+    private Integer roleId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name="role", nullable=false, unique=true, length=50) 
+    private RoleName role;
+
 }
