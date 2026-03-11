@@ -1,0 +1,8 @@
+package com.employee.enums;
+
+public enum RolesEnum {
+	ADMIN,
+	MANAGER,
+	USER
+
+}

@@ -3,7 +3,9 @@ package com.employee.entity;
 import java.time.LocalDateTime;
  
 import org.hibernate.annotations.CreationTimestamp;
- 
+
+import com.employee.util.UserRoleId;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;

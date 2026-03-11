@@ -1,5 +1,7 @@
 package com.employee.entity; // Change to your actual package name
 
+import com.employee.enums.RolesEnum;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -30,6 +32,6 @@ public class Role {
 
     @Enumerated(EnumType.STRING)
     @Column(name="role", nullable=false, unique=true, length=50) 
-    private RoleName role;
+    private RolesEnum role;
 
 }

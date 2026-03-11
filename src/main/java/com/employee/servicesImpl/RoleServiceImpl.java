@@ -4,13 +4,13 @@ import org.springframework.stereotype.Service;
 
 import com.employee.entity.Employee;
 import com.employee.entity.Role;
-import com.employee.entity.RoleName;
 import com.employee.entity.UserRole;
-import com.employee.entity.UserRoleId;
+import com.employee.enums.RolesEnum;
 import com.employee.repository.EmployeeRepository;
 import com.employee.repository.RoleRepository;
 import com.employee.repository.UserRoleRepository;
 import com.employee.services.RoleService;
+import com.employee.util.UserRoleId;
 
 import jakarta.transaction.Transactional;
 @Service
@@ -28,7 +28,7 @@ public class RoleServiceImpl implements RoleService{
 	public void assignRole(String empId, String roleName) {
 
 	    Role role = roleRepository
-	            .findByRole(RoleName.valueOf(roleName))
+	            .findByRole(RolesEnum.valueOf(roleName))
 	            .orElseThrow(() -> new RuntimeException("Role not found"));
 
 	    Employee employee = employeeRepository
@@ -54,7 +54,7 @@ public class RoleServiceImpl implements RoleService{
 	public void removeRole(String empId, String roleName) {
 
 	    Role role = roleRepository
-	            .findByRole(RoleName.valueOf(roleName))
+	            .findByRole(RolesEnum.valueOf(roleName))
 	            .orElseThrow(() -> new RuntimeException("Role not found"));
 
 	    Employee employee = employeeRepository

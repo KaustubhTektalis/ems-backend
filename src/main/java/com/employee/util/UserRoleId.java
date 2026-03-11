@@ -1,4 +1,4 @@
-package com.employee.entity;
+package com.employee.util;
  
 import java.io.Serializable;
  
