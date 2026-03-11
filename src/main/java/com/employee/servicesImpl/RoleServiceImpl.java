@@ -3,8 +3,8 @@ package com.employee.servicesImpl;
 import org.springframework.stereotype.Service;
 
 import com.employee.entity.Employee;
-import com.employee.entity.Role;
-import com.employee.entity.UserRole;
+import com.employee.entity.Roles;
+import com.employee.entity.UserRoles;
 import com.employee.enums.RolesEnum;
 import com.employee.repository.EmployeeRepository;
 import com.employee.repository.RoleRepository;
@@ -27,7 +27,7 @@ public class RoleServiceImpl implements RoleService{
 	@Transactional
 	public void assignRole(String empId, String roleName) {
 
-	    Role role = roleRepository
+	    Roles role = roleRepository
 	            .findByRole(RolesEnum.valueOf(roleName))
 	            .orElseThrow(() -> new RuntimeException("Role not found"));
 
@@ -41,7 +41,7 @@ public class RoleServiceImpl implements RoleService{
 	        throw new RuntimeException("Role is already assigned");
 	    }
 
-	    UserRole userRole = new UserRole();
+	    UserRoles userRole = new UserRoles();
 	    userRole.setId(id);
 	    userRole.setEmployee(employee);  
 	    userRole.setRole(role);
@@ -53,7 +53,7 @@ public class RoleServiceImpl implements RoleService{
 	@Transactional
 	public void removeRole(String empId, String roleName) {
 
-	    Role role = roleRepository
+	    Roles role = roleRepository
 	            .findByRole(RolesEnum.valueOf(roleName))
 	            .orElseThrow(() -> new RuntimeException("Role not found"));
 
@@ -63,7 +63,7 @@ public class RoleServiceImpl implements RoleService{
 
 	    UserRoleId id = new UserRoleId(empId, role.getRoleId());
 
-	    UserRole userRole = userRoleRepository
+	    UserRoles userRole = userRoleRepository
 	            .findById(id)
 	            .orElseThrow(() -> new RuntimeException("Role is not assigned"));
 
