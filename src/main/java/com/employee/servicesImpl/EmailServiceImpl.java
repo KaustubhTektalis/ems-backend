@@ -2,9 +2,10 @@ package com.employee.servicesImpl;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
 
 import com.employee.services.EmailService;
-
+@Service
 public class EmailServiceImpl implements EmailService {
 	private JavaMailSender mailSender;
 
