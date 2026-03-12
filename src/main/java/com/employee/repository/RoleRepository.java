@@ -4,9 +4,9 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.employee.entity.Role;
-import com.employee.entity.RoleName;
+import com.employee.entity.Roles;
+import com.employee.entity.RolesEnum;
  
-public interface RoleRepository extends JpaRepository<Role,Integer>{
- Optional<Role>findByRole(RoleName role);
+public interface RoleRepository extends JpaRepository<Roles,Integer>{
+ Optional<Roles>findByRole(RolesEnum role);
 }

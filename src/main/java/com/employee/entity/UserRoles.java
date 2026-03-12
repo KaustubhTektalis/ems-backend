@@ -23,7 +23,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserRole {
+public class UserRoles {
 	@EmbeddedId
 	private UserRoleId id;
 	@ManyToOne
@@ -33,7 +33,7 @@ public class UserRole {
 	@ManyToOne
 	@MapsId("roleId")
 	@JoinColumn(name="role_id")
-	private Role role;
+	private Roles role;
 	@CreationTimestamp
 	private LocalDateTime createdAt;
 

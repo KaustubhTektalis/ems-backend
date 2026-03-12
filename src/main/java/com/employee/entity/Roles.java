@@ -21,13 +21,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Role {
+public class Roles {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="role_id")
 	private Integer roleId;
 	@Enumerated(EnumType.STRING)
 	@Column(columnDefinition = "role_enum",nullable=false,unique=true)
-	private RoleName role;
+	private RolesEnum role;
  
 }

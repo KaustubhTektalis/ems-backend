@@ -1,6 +1,6 @@
 package com.employee.entity;
 
-public enum RoleName {
+public enum RolesEnum {
 	ADMIN,
 	MANAGER,
 	USER
