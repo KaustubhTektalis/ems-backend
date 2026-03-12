@@ -36,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private final EmployeeRepository employeeRepository;
 	private final RoleRepository rolesRepository;
-	private final UserRepository passwordRepository;
+	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
 	@PersistenceContext
@@ -62,9 +62,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 		Employee savedEmployee = employeeRepository.save(employee);
 
-		Users password = Users.builder().employee(savedEmployee).password(passwordEncoder.encode("pass")).build();
+		Users user = Users.builder().employee(savedEmployee).password(passwordEncoder.encode("pass")).build();
 
-		passwordRepository.save(password);
+		userRepository.save(user);
 
 		Set<UserRoles> userRoles = dto.getRoles().stream().map(roleEnum -> {
 
@@ -143,10 +143,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Transactional
-	public EmployeesDetailsDTO updatePersonalMail(String empId, String personalMail) {
+	public EmployeesDetailsDTO updatePersonalEmail(String empId, String personalEmail) {
 		Employee employee = getActiveEmployee(empId);
 
-		employee.setPersonalEmail(personalMail);
+		employee.setPersonalEmail(personalEmail);
 		return employeeDetails(employee);
 	}
 
@@ -185,8 +185,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	// Mapper
 	private EmployeesDetailsDTO employeeDetails(Employee employee) {
 		return EmployeesDetailsDTO.builder().empId(employee.getEmpId()).name(employee.getName())
-				.companyMail(employee.getCompanyEmail()).department(employee.getDepartment())
-				.personalMail(employee.getPersonalEmail()).address(employee.getAddress())
+				.companyEmail(employee.getCompanyEmail()).department(employee.getDepartment())
+				.personalEmail(employee.getPersonalEmail()).address(employee.getAddress())
 				.phoneNumber(employee.getPhoneNumber()).designation(employee.getDesignation())
 				.dateOfJoin(employee.getDateOfJoin()).build();
 	}
