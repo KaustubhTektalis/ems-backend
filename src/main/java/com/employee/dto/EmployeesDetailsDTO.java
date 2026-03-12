@@ -10,10 +10,10 @@ public class EmployeesDetailsDTO {
 
 	private String empId;
 	private String name;
-	private String companyMail;
+	private String companyEmail;
 	private String department;
 	private String designation;
-	private String personalMail;
+	private String personalEmail;
 	private String address;
 	private String phoneNumber;
 	private LocalDate dateOfJoin;

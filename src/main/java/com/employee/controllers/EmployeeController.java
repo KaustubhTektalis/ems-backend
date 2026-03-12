@@ -71,8 +71,8 @@ public class EmployeeController {
 	}
 
 	@PatchMapping("/update/mail/{empId}")
-	public EmployeesDetailsDTO updatePersonalMail(@PathVariable String empId, @RequestParam String personalMail) {
-		return employeeService.updatePersonalMail(empId, personalMail);
+	public EmployeesDetailsDTO updatePersonalEmail(@PathVariable String empId, @RequestParam String personalEmail) {
+		return employeeService.updatePersonalEmail(empId, personalEmail);
 	}
 
 	@PatchMapping("/update/phone/{empId}")

@@ -1,5 +1,6 @@
 package com.employee.servicesImpl;
 
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.employee.entity.Employee;
@@ -8,24 +9,28 @@ import com.employee.entity.UserRoles;
 import com.employee.enums.RolesEnum;
 import com.employee.repository.EmployeeRepository;
 import com.employee.repository.RoleRepository;
+//import com.employee.repository.UserRepository;
 import com.employee.repository.UserRoleRepository;
 import com.employee.services.RoleService;
 import com.employee.utils.UserRoleId;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
+
 	private final RoleRepository roleRepository;
 	private final UserRoleRepository userRoleRepository;
 	private final EmployeeRepository employeeRepository;
 
-	public RoleServiceImpl(RoleRepository roleRepository, UserRoleRepository userRoleRepository,
-			EmployeeRepository employeeRepository) {
-		this.roleRepository = roleRepository;
-		this.userRoleRepository = userRoleRepository;
-		this.employeeRepository = employeeRepository;
-	}
+//	public RoleServiceImpl(RoleRepository roleRepository, UserRoleRepository userRoleRepository,
+//			EmployeeRepository employeeRepository) {
+//		this.roleRepository = roleRepository;
+//		this.userRoleRepository = userRoleRepository;
+//		this.employeeRepository = employeeRepository;
+//	}
 
 	@Override
 	@Transactional
