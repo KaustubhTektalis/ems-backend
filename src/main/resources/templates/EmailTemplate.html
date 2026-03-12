@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Employee Account Created</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background: #f5f6fa;
+	padding: 20px;
+}
+
+.container {
+	max-width: 600px;
+	margin: auto;
+	background: white;
+	border-radius: 8px;
+	padding: 25px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+	background: #1976d2;
+	padding: 20px;
+	border-radius: 6px 6px 0 0;
+}
+
+.logo-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 15px;
+}
+
+.logo-container img {
+	height: 40px;
+	width: auto;
+}
+
+.logo-container h2 {
+	color: white;
+	margin: 0;
+	font-size: 22px;
+}
+
+.content {
+	padding: 20px;
+}
+
+.details {
+	background: #f1f3f6;
+	padding: 15px;
+	border-radius: 5px;
+	margin-top: 15px;
+}
+
+.footer {
+	text-align: center;
+	font-size: 12px;
+	color: #777;
+	margin-top: 20px;
+}
+</style>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="header"
+			style="background: #1976d2; padding: 20px; text-align: center;">
+
+			<img src="cid:tektalisLogo" height="45"
+				style="vertical-align: middle;">
+
+			<h2 style="color: white; margin-top: 10px;">Welcome to Tektalis
+			</h2>
+
+		</div>
+		<div class="content">
+
+			<p>
+				Hello <b th:text="${name}"></b>,
+			</p>
+			<p>Your employee account has been successfully created! Welcome
+				onboard!</p>
+			<div class="details">
+				<p>
+					<b>Employee ID:</b> <span th:text="${empId}"></span>
+				</p>
+				<p>
+					<b>Company Mail:</b> <span th:text="${companyEmail}"></span>
+				</p>
+				<p>
+					<b>Password:</b> <span th:text="${password}"></span>
+				</p>
+			</div>
+			<p>Please login and change your password immediately.</p>
+			<h1>
+				<a href="https://tektalis.com/">tektalis.com</a>
+			</h1>
+			<p>
+				Regards,<br>Tektalis
+			</p>
+		</div>
+		<div class="footer">This is an automated email. Please do not
+			reply.</div>
+	</div>
+</body>
+</html>

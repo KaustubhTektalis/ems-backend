@@ -24,6 +24,7 @@ import com.employee.repository.UserRepository;
 import com.employee.repository.RoleRepository;
 import com.employee.services.EmailService;
 import com.employee.services.EmployeeService;
+import com.employee.utils.GeneratePassword;
 import com.employee.utils.UserRoleId;
 
 import jakarta.persistence.EntityManager;
@@ -63,8 +64,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.dateOfBirth(dto.getDateOfBirth()).description(dto.getDescription()).build();
 
 		Employee savedEmployee = employeeRepository.save(employee);
+		
+		String rawPassword = GeneratePassword.generatePassword(8);
 
-		Users user = Users.builder().employee(savedEmployee).password(passwordEncoder.encode("pass")).build();
+		Users user = Users.builder().employee(savedEmployee).password(passwordEncoder.encode(rawPassword)).build();
 
 		userRepository.save(user);
 
@@ -82,7 +85,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		            savedEmployee.getPersonalEmail(),
 		            savedEmployee.getEmpId(),
 		            savedEmployee.getCompanyEmail(),
-		            user.getPassword()
+		            rawPassword,
+		            savedEmployee.getName()
 		    );
 
 
