@@ -22,7 +22,9 @@ import com.employee.entity.UserRoles;
 import com.employee.repository.EmployeeRepository;
 import com.employee.repository.UserRepository;
 import com.employee.repository.RoleRepository;
+import com.employee.services.EmailService;
 import com.employee.services.EmployeeService;
+import com.employee.utils.GeneratePassword;
 import com.employee.utils.UserRoleId;
 
 import jakarta.persistence.EntityManager;
@@ -38,6 +40,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private final RoleRepository rolesRepository;
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
+	private final EmailService emailService;
 
 	@PersistenceContext
 	private EntityManager entityManager;
@@ -61,8 +64,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.dateOfBirth(dto.getDateOfBirth()).description(dto.getDescription()).build();
 
 		Employee savedEmployee = employeeRepository.save(employee);
+		
+		String rawPassword = GeneratePassword.generatePassword(8);
 
-		Users user = Users.builder().employee(savedEmployee).password(passwordEncoder.encode("pass")).build();
+		Users user = Users.builder().employee(savedEmployee).password(passwordEncoder.encode(rawPassword)).build();
 
 		userRepository.save(user);
 
@@ -76,6 +81,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}).collect(Collectors.toSet());
 
 		employee.setRoles(userRoles);
+		 emailService.sendLoginDetails(
+		            savedEmployee.getPersonalEmail(),
+		            savedEmployee.getEmpId(),
+		            savedEmployee.getCompanyEmail(),
+		            rawPassword,
+		            savedEmployee.getName()
+		    );
+
 
 		return employeeDetails(savedEmployee);
 	}
