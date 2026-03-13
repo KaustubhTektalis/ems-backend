@@ -119,7 +119,7 @@ public class AuthServiceImpl implements AuthService {
 	    resetToken.setExpiryDate(LocalDateTime.now().plusMinutes(15));
 	    tokenRepository.save(resetToken);
 	    String resetLink =
-	            "http://localhost:3000/reset-password?token=" + token;
+	            "http://localhost:3000/resetPassword?token=" + token;
 
 	    emailService.sendResetPasswordEmail(email, resetLink);
 		
