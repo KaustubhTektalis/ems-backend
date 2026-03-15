@@ -24,14 +24,6 @@ public class RoleServiceImpl implements RoleService {
 	private final RoleRepository roleRepository;
 	private final UserRoleRepository userRoleRepository;
 	private final EmployeeRepository employeeRepository;
-
-//	public RoleServiceImpl(RoleRepository roleRepository, UserRoleRepository userRoleRepository,
-//			EmployeeRepository employeeRepository) {
-//		this.roleRepository = roleRepository;
-//		this.userRoleRepository = userRoleRepository;
-//		this.employeeRepository = employeeRepository;
-//	}
-
 	@Override
 	@Transactional
 	public void assignRole(String empId, String roleName) {
@@ -62,10 +54,6 @@ public class RoleServiceImpl implements RoleService {
 
 		Roles role = roleRepository.findByRole(RolesEnum.valueOf(roleName))
 				.orElseThrow(() -> new RuntimeException("Role not found"));
-
-//	    Employee employee = employeeRepository
-//	            .findById(empId)
-//	            .orElseThrow(() -> new RuntimeException("Employee not found"));
 
 		UserRoleId id = new UserRoleId(empId, role.getRoleId());
 

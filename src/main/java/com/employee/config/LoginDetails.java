@@ -7,15 +7,15 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.employee.entity.Users;
+import com.employee.entity.User;
 import com.employee.repository.UserRoleRepository;
 
 public class LoginDetails implements UserDetails {
 
-	private final Users user;
+	private final User user;
 	private final UserRoleRepository userRoleRepository;
 
-	public LoginDetails(Users user, UserRoleRepository userRoleRepository) {
+	public LoginDetails(User user, UserRoleRepository userRoleRepository) {
 
 		this.user = user;
 		this.userRoleRepository = userRoleRepository;

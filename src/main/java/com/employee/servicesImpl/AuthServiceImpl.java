@@ -10,7 +10,7 @@ import com.employee.config.JwtUtils;
 import com.employee.dto.LoginRequest;
 import com.employee.dto.LoginResponse;
 import com.employee.dto.RefreshTokenRequest;
-import com.employee.entity.Users;
+import com.employee.entity.User;
 import com.employee.repository.UserRepository;
 import com.employee.repository.UserRoleRepository;
 import com.employee.services.AuthService;
@@ -38,7 +38,7 @@ public class AuthServiceImpl implements AuthService {
 		authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
 
-		Users user;
+		User user;
 
 		if (request.getUsername().contains("@")) {
 
@@ -69,7 +69,7 @@ public class AuthServiceImpl implements AuthService {
 
 		String empId = jwtUtils.extractUsername(refreshToken);
 
-		Users user = userRepository.findById(empId).orElseThrow(() -> new RuntimeException("User not found"));
+		User user = userRepository.findById(empId).orElseThrow(() -> new RuntimeException("User not found"));
 
 		if (!jwtUtils.validateToken(refreshToken, empId)) {
 			throw new RuntimeException("Invalid refresh token");

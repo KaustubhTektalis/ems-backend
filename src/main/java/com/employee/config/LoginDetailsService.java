@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.employee.entity.Users;
+import com.employee.entity.User;
 import com.employee.repository.UserRepository;
 import com.employee.repository.UserRoleRepository;
 
@@ -24,7 +24,7 @@ public class LoginDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		Users user;
+		User user;
 
 		if (username.contains("@")) {
 

@@ -5,10 +5,10 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.employee.entity.Users;
+import com.employee.entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<Users, String> {
+public interface UserRepository extends JpaRepository<User, String> {
 
-	Optional<Users> findByEmployeeCompanyEmail(String email);
+	Optional<User> findByEmployeeCompanyEmail(String email);
 }

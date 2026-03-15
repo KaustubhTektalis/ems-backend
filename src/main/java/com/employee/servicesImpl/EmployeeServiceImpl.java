@@ -14,8 +14,9 @@ import com.employee.dto.CreateEmployeeDTO;
 import com.employee.dto.EmployeesDetailsDTO;
 import com.employee.dto.UpdateAllDTO;
 import com.employee.entity.Employee;
-import com.employee.entity.Users;
+import com.employee.entity.User;
 import com.employee.exceptions.DuplicateEmployeeException;
+import com.employee.exceptions.EmployeeNotFoundException;
 import com.employee.exceptions.InactiveEmployeeException;
 import com.employee.entity.Roles;
 import com.employee.entity.UserRoles;
@@ -37,7 +38,7 @@ import lombok.RequiredArgsConstructor;
 public class EmployeeServiceImpl implements EmployeeService {
 
 	private final EmployeeRepository employeeRepository;
-	private final RoleRepository rolesRepository;
+	private final RoleRepository roleRepository;
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final EmailService emailService;
@@ -64,16 +65,16 @@ public class EmployeeServiceImpl implements EmployeeService {
 				.dateOfBirth(dto.getDateOfBirth()).description(dto.getDescription()).build();
 
 		Employee savedEmployee = employeeRepository.save(employee);
-		
+
 		String rawPassword = GeneratePassword.generatePassword(8);
 
-		Users user = Users.builder().employee(savedEmployee).password(passwordEncoder.encode(rawPassword)).build();
+		User user = User.builder().employee(savedEmployee).password(passwordEncoder.encode(rawPassword)).build();
 
 		userRepository.save(user);
 
 		Set<UserRoles> userRoles = dto.getRoles().stream().map(roleEnum -> {
 
-			Roles role = rolesRepository.findByRole(roleEnum)
+			Roles role = roleRepository.findByRole(roleEnum)
 					.orElseThrow(() -> new EntityNotFoundException("Role not found: " + roleEnum));
 
 			return UserRoles.builder().employee(savedEmployee).role(role)
@@ -81,14 +82,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}).collect(Collectors.toSet());
 
 		employee.setRoles(userRoles);
-		 emailService.sendLoginDetails(
-		            savedEmployee.getPersonalEmail(),
-		            savedEmployee.getEmpId(),
-		            savedEmployee.getCompanyEmail(),
-		            rawPassword,
-		            savedEmployee.getName()
-		    );
-
+		emailService.sendLoginDetails(savedEmployee.getPersonalEmail(), savedEmployee.getEmpId(),
+				savedEmployee.getCompanyEmail(), rawPassword, savedEmployee.getName());
 
 		return employeeDetails(savedEmployee);
 	}
@@ -184,7 +179,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	// Helper
 	private Employee getActiveEmployee(String empId) {
 		Employee employee = employeeRepository.findById(empId)
-				.orElseThrow(() -> new EntityNotFoundException("Employee not found with id: " + empId));
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found with id: " + empId));
 
 		if (!employee.getIsEmployeeActive()) {
 			throw new InactiveEmployeeException("employee is inactive");
